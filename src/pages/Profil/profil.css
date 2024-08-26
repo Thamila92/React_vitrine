@@ -1,0 +1,89 @@
+.profile-container {
+    display: flex;
+    padding: 20px;
+  }
+  
+  .profile-sidebar {
+    width: 300px;
+    text-align: center;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+  }
+  
+  .profile-avatar {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+  }
+  
+  .profile-link {
+    display: block;
+    color: #FFA500;
+    text-decoration: none;
+    margin-top: 10px;
+  }
+  
+  .profile-link:hover {
+    text-decoration: underline;
+  }
+  
+  .profile-content {
+    flex-grow: 1;
+    padding: 20px;
+  }
+  
+  .profile-form {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .profile-section {
+    width: 45%;
+  }
+  
+  .profile-section h2 {
+    margin-bottom: 20px;
+  }
+  
+  .profile-section label {
+    display: block;
+    margin: 10px 0 5px;
+  }
+  
+  input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .manage-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .manage-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .save-btn {
+    padding: 15px 30px;
+    background-color: #FFA500;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .save-btn:hover {
+    background-color: #ff8c00;
+  }
+  

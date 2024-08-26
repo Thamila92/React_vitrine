@@ -1,0 +1,19 @@
+.mes-dons-container {
+    padding: 20px;
+    background-color: white;
+    color: orange;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  h1, h2 {
+    text-align: center;
+    color: orange;
+  }
+  
+  canvas {
+    margin-top: 20px;
+  }
+  

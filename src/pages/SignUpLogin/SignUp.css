@@ -1,45 +1,75 @@
 .signup-container {
-    max-width: 400px;
+    width: 100%;
+    max-width: 500px;
     margin: 0 auto;
     padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .signup-container h1 {
+}
+
+.signup-container h2 {
     text-align: center;
-    color: #FFA500;
-  }
-  
-  form {
+    color: #ff9900;
+    margin-bottom: 20px;
+}
+
+.signup-form {
     display: flex;
     flex-direction: column;
-  }
-  
-  label {
-    margin-top: 10px;
-    color: #333;
-  }
-  
-  input {
+}
+
+.signup-form label {
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.signup-form input,
+.signup-form select {
+    width: 100%;
     padding: 10px;
     margin-top: 5px;
-    border: 1px solid #ddd;
     border-radius: 5px;
-  }
-  
-  button {
-    margin-top: 20px;
+    border: 1px solid #ccc;
+}
+
+.signup-form button {
     padding: 10px;
-    background-color: #FFA500;
+    background-color: #ff9900;
     color: white;
+    font-size: 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #ff9800;
-  }
-  
+    margin-top: 20px;
+}
+
+.signup-form button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.signup-form input:focus,
+.signup-form select:focus {
+    outline: none;
+    border-color: #ff9900;
+}
+
+.signup-form input[type="password"] {
+    font-family: 'Arial', sans-serif;
+}
+
+.signup-form input[type="date"] {
+    font-family: 'Arial', sans-serif;
+}
+
+.signup-form input[type="email"] {
+    font-family: 'Arial', sans-serif;
+}
+.signup-form .StripeElement {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}

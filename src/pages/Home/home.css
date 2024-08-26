@@ -67,7 +67,7 @@ body {
     background: rgba(0, 0, 0, 0.4);
     z-index: 1;
 }
-
+ 
 .slider-text {
     position: absolute;
     top: 50%;
@@ -87,6 +87,8 @@ body {
 
 .slider-text p {
     font-size: 1.2rem;
+    color: white; /* Assurez-vous que le titre est également blanc */
+
 }
 
 /* Sections */

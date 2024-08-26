@@ -1,9 +1,14 @@
-// Home.js
 import React from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import './Home.css';  
+import './home.css';  // Si le fichier CSS est là
+
+// Assurez-vous d'importer les images que vous voulez utiliser
+import image1 from '../../assets/images/image_1.jpg';
+import image2 from '../../assets/images//image_2.jpeg';
+import image3 from '../../assets/images/image_3.jpg';
+import image4 from '../../assets/images/image_4.jpg';
 
 const Home = () => {
   const settings = {
@@ -19,25 +24,39 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      {/* Hero Slider */}
-      <div className="hero-slider">
+      {/* Slider Section */}
+      <section className="hero-slider">
         <Slider {...settings}>
           <div className="slider-item">
-            <img src="/images/image_1.jpg" alt="Slider 1" />
+            <img src={image1} alt="Slide 1" />
             <div className="slider-text">
               <h1>Bienvenue chez Companion</h1>
-              <p>Aider les personnes âgées avec passion et engagement.</p>
+              <p>Votre partenaire pour un accompagnement de qualité.</p>
             </div>
           </div>
           <div className="slider-item">
-            <img src="/images/image_2.jpeg" alt="Slider 2" />
+            <img src={image2} alt="Slide 2" />
             <div className="slider-text">
-              <h1>Notre mission</h1>
-              <p>Offrir du soutien aux personnes âgées.</p>
+              <h1>Des activités pour tous</h1>
+              <p>Nous organisons des événements pour le bien-être des personnes âgées.</p>
+            </div>
+          </div>
+          <div className="slider-item">
+            <img src={image3} alt="Slide 3" />
+            <div className="slider-text">
+              <h1>Rejoignez-nous</h1>
+              <p>Découvrez comment vous pouvez participer à nos activités.</p>
+            </div>
+          </div>
+          <div className="slider-item">
+            <img src={image4} alt="Slide 4" />
+            <div className="slider-text">
+              <h1>Contactez-nous</h1>
+              <p>Nous sommes à votre écoute pour toute question.</p>
             </div>
           </div>
         </Slider>
-      </div>
+      </section>
 
       {/* Section À propos */}
       <section id="about" className="about-section">
@@ -52,13 +71,11 @@ const Home = () => {
       <section id="events" className="events-section">
         <h2>Découvrez nos actions</h2>
         <p>
-          Chez Companion, nous organisons régulièrement des activités et des événements qui reflètent nos valeurs fondamentales : le respect, l'empathie, et l'engagement envers les personnes âgées. Que ce soit à travers des journées portes ouvertes, des ateliers de bien-être, des conférences sur le vieillissement, ou des activités communautaires, notre objectif est de créer un environnement chaleureux et inclusif pour tous.
-        </p>
-        <p>
-          Rejoignez-nous pour découvrir comment vous pouvez vous impliquer et contribuer à faire une différence dans la vie des personnes âgées.
+          Chez Companion, nous organisons régulièrement des activités et des événements qui reflètent nos valeurs fondamentales : le respect, l'empathie, et l'engagement envers les personnes âgées.
         </p>
       </section>
 
+      {/* Section Nous trouver */}
       <section id="location" className="location-section">
         <h2>Nous trouver</h2>
         <p>Nos locaux se situent ici :</p>

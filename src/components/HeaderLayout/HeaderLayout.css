@@ -8,7 +8,12 @@
   .main-content {
     flex: 1;
     padding: 20px;
-  }
+    display: flex;
+    justify-content: center; /* Centrer horizontalement */
+    align-items: center;     /* Centrer verticalement */
+    min-height: 100vh;       /* S'assurer que le contenu occupe toute la hauteur de la vue */
+}
+
   
   .content {
     margin-top: 20px;

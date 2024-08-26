@@ -1,49 +1,92 @@
+/* Conteneur principal du formulaire de demande */
 .demande-container {
-    max-width: 600px;
+    width: 100%; 
+     max-width: 600px;         
     margin: 0 auto;
     padding: 20px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .demande-container h1 {
+    height: auto;             
+}
+
+
+/* Titre du formulaire */
+.demande-container h1 {
     text-align: center;
     color: #FFA500;
-  }
-  
-  form {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Formulaire */
+form {
     display: flex;
     flex-direction: column;
-  }
-  
-  label {
-    margin-top: 10px;
+}
+
+/* Labels des champs de formulaire */
+label {
+    margin-top: 15px;
     color: #333;
-  }
-  
-  input, textarea {
-    padding: 10px;
-    margin-top: 5px;
+    font-weight: bold;
+}
+
+/* Champs de texte et textarea */
+input, textarea {
+    padding: 12px;
+    margin-top: 8px;
     border: 1px solid #ddd;
     border-radius: 5px;
-  }
-  
-  textarea {
+    font-size: 1rem;
+}
+
+/* Champs textarea (zone de texte étendue) */
+textarea {
     resize: vertical;
-  }
-  
-  button {
+    min-height: 120px;
+}
+
+/* Bouton de soumission */
+button {
     margin-top: 20px;
-    padding: 10px;
+    padding: 12px;
     background-color: #FFA500;
     color: white;
     border: none;
     border-radius: 5px;
+    font-size: 1.2rem;
     cursor: pointer;
-  }
-  
-  button:hover {
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Effet hover sur le bouton */
+button:hover {
     background-color: #ff9800;
-  }
-  
+}
+
+/* Styles de responsive design */
+@media (max-width: 768px) {
+    .demande-container {
+        padding: 15px;
+    }
+    input, textarea {
+        font-size: 0.9rem;
+    }
+    button {
+        font-size: 1rem;
+        padding: 10px;
+    }
+}
+
+/* Animation d'apparition douce */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
