@@ -1,9 +1,8 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/home';
 import Events from './pages/events/event';
 import Demande from './pages/Demande/demande';
-import Contact from './pages/Contact/contact';
+import Contact from './pages/Contact/contact.tsx';
 import SignUpLogin from './pages/SignUpLogin/Login';
 import HeaderLayout from './components/HeaderLayout/HeaderLayout';
 import SignUp from './pages/SignUpLogin/SignUp';
