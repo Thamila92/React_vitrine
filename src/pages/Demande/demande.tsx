@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './Demande.css'; 
+import './demande.css'; 
 
 interface FormData {
   email: string;
