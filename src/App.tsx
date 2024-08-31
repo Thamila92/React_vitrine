@@ -13,8 +13,7 @@ import MesReservations from './pages/mes_reservations/mes_reservations';
 import Don from './pages/Don/don';
 import ChatbotComponent from './components/chatbot/ChatbotComponent';
 
-import MesDons from './pages/Mes_Dons/mes_dons';
-import DonutChart from './pages/Mes_Dons/mes_dons';
+ import DonutChart from './pages/Mes_Dons/mes_dons';
 function App() {
   return (
     <div className="App">
