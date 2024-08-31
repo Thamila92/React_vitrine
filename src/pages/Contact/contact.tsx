@@ -1,4 +1,4 @@
- import './Contact.css'; // Crée un fichier CSS pour le style
+ import './contact.css'; // Crée un fichier CSS pour le style
 
 const Contact = () => {
   return (
