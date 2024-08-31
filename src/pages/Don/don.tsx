@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import './Don.css'; // Utilisation d'un fichier CSS pour le style
+import './don.css'; // Utilisation d'un fichier CSS pour le style
 
 // Charger Stripe avec votre clé publique
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY || '');
