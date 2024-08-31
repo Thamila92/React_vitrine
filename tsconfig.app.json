@@ -18,7 +18,11 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* Support for JavaScript files */
+    "allowJs": true,  // Permet d'inclure des fichiers .js et .jsx dans le projet
+    "checkJs": false  // Désactive la vérification des types dans les fichiers .js et .jsx
   },
   "include": ["src"]
 }

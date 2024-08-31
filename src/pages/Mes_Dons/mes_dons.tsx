@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Doughnut } from 'react-chartjs-2';
+ import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom'; // Importation de NavLink
+import { useEffect, useState } from 'react';
 
 // Enregistrement des éléments nécessaires pour chart.js
 ChartJS.register(ArcElement, Tooltip, Legend);

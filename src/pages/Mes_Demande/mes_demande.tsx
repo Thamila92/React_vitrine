@@ -77,7 +77,7 @@ const MesDemandes = () => {
   
     try {
       // Assure-toi que l'URL est correcte
-      const response = await axios.put(`${VITE_URL_API}/demandes/${currentDemande.id}`, currentDemande);
+      const response = await axios.patch(`${VITE_URL_API}/demandes/${currentDemande.id}`, currentDemande);
       
       if (response.status === 200) {
         // Mise à jour réussie

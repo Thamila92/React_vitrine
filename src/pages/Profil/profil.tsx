@@ -98,14 +98,7 @@ const Profile = () => {
         // Afficher le formulaire de paiement
         setIsRenewingSubscription(true);
     };
-
-    const handlePaymentSubmit = async (e) => {
-        e.preventDefault();
-        // Logique de gestion du paiement ici (par exemple, appel Stripe API)
-        alert("Paiement soumis !");
-        // Après soumission, vous pouvez cacher le formulaire ou réinitialiser l'état si besoin
-        setIsRenewingSubscription(false);
-    };
+ 
 
     return (
         <div className="profile-container">

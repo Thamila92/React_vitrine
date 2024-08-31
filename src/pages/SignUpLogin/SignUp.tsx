@@ -12,14 +12,12 @@ const SignupForm = () => {
         name: '',
         email: '',
         password: '',
-        skills: '',             // Store skills as a string, e.g., "skill1, skill2"
+        skills: '',
         address: '',
-        dateDeNaissance: '',     // Changed to match your backend's expectation
+        dateDeNaissance: '',
     });
 
-    // Separate state for adherentType (only used for payment)
-    const [adherentType, setAdherentType] = useState(''); // Not part of formData
-
+    const [adherentType, setAdherentType] = useState('');
     const [amount, setAmount] = useState(0);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const stripe = useStripe();
@@ -30,16 +28,14 @@ const SignupForm = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    // Handle the selection of adherentType (not part of the form state)
     const handleAdherentTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const { value } = e.target;
         setAdherentType(value);
 
-        // Update the amount based on the selected adherent type
         let selectedAmount = 0;
-        if (value === 'student') selectedAmount = 1000;  // 10 EUR in cents
-        if (value === 'employee') selectedAmount = 2000; // 20 EUR in cents
-        if (value === 'company') selectedAmount = 3000;  // 30 EUR in cents
+        if (value === 'student') selectedAmount = 1000;
+        if (value === 'employee') selectedAmount = 2000;
+        if (value === 'company') selectedAmount = 3000;
         setAmount(selectedAmount);
     };
 
@@ -47,24 +43,27 @@ const SignupForm = () => {
         e.preventDefault();
         setIsSubmitting(true);
 
-        // Ensure Stripe and Elements are loaded
         if (!stripe || !elements) {
             return;
         }
 
         try {
-            // Step 1: Create a payment intent on the backend
+            const startDate = new Date();
+            const expirationDate = new Date(startDate);
+            expirationDate.setMonth(startDate.getMonth() + 1);
+
             const paymentRes = await axios.post(`${import.meta.env.VITE_URL_API}/paiements/cotisation`, {
                 amount,
                 currency: 'eur',
                 email: formData.email,
-                category: adherentType,  // Send adherentType only for the payment
-                description: 'Création de compte adhérent'
+                category: adherentType,
+                description: 'Création de compte adhérent',
+                startDate,           // Ajouter startDate à la requête
+                expirationDate       // Ajouter expirationDate à la requête
             });
 
             const { clientSecret } = paymentRes.data;
 
-            // Step 2: Confirm the payment using Stripe's confirmCardPayment method
             const cardElement = elements.getElement(CardElement);
 
             const paymentResult = await stripe.confirmCardPayment(clientSecret, {
@@ -78,21 +77,19 @@ const SignupForm = () => {
             });
 
             if (paymentResult.error) {
-                // Show error to your customer
                 alert(paymentResult.error.message);
                 setIsSubmitting(false);
                 return;
             }
 
             if (paymentResult.paymentIntent?.status === 'succeeded') {
-                // Step 3: If payment is successful, create the user account
                 const userRes = await axios.post(`${import.meta.env.VITE_URL_API}/adherent/signup`, {
                     name: formData.name,
                     email: formData.email,
                     password: formData.password,
-                    skills: formData.skills.split(','),  // Convert skills string into an array
+                    skills: formData.skills.split(','),
                     address: formData.address,
-                    dateDeNaissance: formData.dateDeNaissance  // Send the correct field
+                    dateDeNaissance: formData.dateDeNaissance
                 });
 
                 if (userRes.status === 201) {
@@ -115,32 +112,26 @@ const SignupForm = () => {
                     Nom:
                     <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
                 </label>
-
                 <label>
                     Email:
                     <input type="email" name="email" value={formData.email} onChange={handleInputChange} required />
                 </label>
-
                 <label>
                     Mot de passe:
                     <input type="password" name="password" value={formData.password} onChange={handleInputChange} required minLength={8} />
                 </label>
-
                 <label>
                     Compétences (séparées par des virgules):
                     <input type="text" name="skills" value={formData.skills} onChange={handleInputChange} />
                 </label>
-
                 <label>
                     Adresse:
                     <input type="text" name="address" value={formData.address} onChange={handleInputChange} />
                 </label>
-
                 <label>
                     Date de naissance:
                     <input type="date" name="dateDeNaissance" value={formData.dateDeNaissance} onChange={handleInputChange} />
                 </label>
-
                 <label>
                     Type d'adhérent:
                     <select name="adherentType" value={adherentType} onChange={handleAdherentTypeChange} required>
@@ -150,12 +141,10 @@ const SignupForm = () => {
                         <option value="company">Entreprise - 30€ / mois</option>
                     </select>
                 </label>
-
                 <label>
                     Détails de la carte:
                     <CardElement />
                 </label>
-
                 <button type="submit" disabled={!stripe || isSubmitting}>
                     {isSubmitting ? 'Processing...' : 'S\'inscrire'}
                 </button>
