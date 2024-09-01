@@ -84,7 +84,35 @@ const Profile = () => {
         }
     };
     
-    
+    const handlePasswordChange = async () => {
+        const userId = localStorage.getItem('userId');
+        const VITE_URL_API = import.meta.env.VITE_URL_API;
+
+        try {
+            const response = await fetch(`${VITE_URL_API}/UpdatePwd/${userId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+                body: JSON.stringify({
+                    oldPassword: userData.actual_password,
+                    newPassword: userData.new_password
+                }),
+            });
+
+            if (response.ok) {
+                alert('Mot de passe mis à jour avec succès');
+                setIsEditingEmailPassword(false);
+                setUserData({ ...userData, actual_password: '', new_password: '' });
+            } else {
+                throw new Error('Failed to change password');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Erreur lors du changement de mot de passe.');
+        }
+    };
 
     const handleEditEmailPassword = () => {
         setIsEditingEmailPassword(true);
@@ -171,6 +199,8 @@ const Profile = () => {
                                     value={userData.new_password}
                                     onChange={handleInputChange}
                                 />
+                              <button onClick={handlePasswordChange}>Changer le mot de passe</button>
+
                             </>
                         ) : (
                             <>
