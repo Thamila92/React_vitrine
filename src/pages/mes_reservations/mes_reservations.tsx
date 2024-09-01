@@ -17,7 +17,19 @@ interface Evenement {
   location?: Location[];
 }
 
+// Nouvelle interface pour le participant
+interface Attendee {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  age: number;
+  evenement: Evenement; // Assurez-vous que c'est bien structuré
+}
+
 const MesReservations = () => {
+  const [attendees, setAttendees] = useState<Attendee[]>([]); // Utilisation de la nouvelle interface
+
   const [events, setEvents] = useState<Evenement[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -45,23 +57,26 @@ const MesReservations = () => {
         setLoading(false);
         return;
       }
-
+  
       try {
         const response = await axios.get(`${VITE_URL_API}/getUserEvenementAttendees/${userId}`);
+        console.log(response.data); // Ajoutez cette ligne pour voir ce que vous recevez exactement
         setEvents(response.data);
+        setAttendees(response.data);
         setLoading(false);
       } catch (err) {
         setError('Erreur lors de la récupération des événements.');
         setLoading(false);
       }
     };
-
+  
     fetchReservations();
   }, [userId]);
+ 
 
   const handleCancelReservation = async (eventId: number) => {
     try {
-      await axios.delete(`${VITE_URL_API}/evenements/${eventId}/cancelReservation`);
+      await axios.delete(`${VITE_URL_API}/events/attendees/${eventId}`);
       setEvents(events.filter(event => event.id !== eventId));
       alert("Votre inscription a été annulée.");
     } catch (error) {
@@ -85,22 +100,23 @@ const MesReservations = () => {
   return (
     <div className="reservations-container">
       <h1>Mes Réservations</h1>
-      {events.length > 0 ? (
+      {attendees.length > 0 ? (
         <div className="reservations-list">
-          {events.map((event) => (
-            <div key={event.id} className="reservation-card">
-              <h2>{event.type === 'PORTE_OUVERTE' ? 'Porte Ouverte' : event.type}</h2>
-              <p>{event.description}</p>
-              <p><strong>Début :</strong> {new Date(event.starting).toLocaleDateString()}</p>
-              <p><strong>Fin :</strong> {new Date(event.ending).toLocaleDateString()}</p>
-              <p><strong>Lieu :</strong> {event.location && event.location.length > 0 ? event.location[0].position : 'Lieu non spécifié'}</p>
-              <button onClick={() => handleCancelReservation(event.id)}>Annuler votre inscription</button>
+          {attendees.map((attendee) => (
+            <div key={attendee.evenement.id} className="reservation-card">
+              <h2>{attendee.evenement.type === 'PORTE_OUVERTE' ? 'Porte Ouverte' : attendee.evenement.type}</h2>
+              <p>{attendee.evenement.description}</p>
+              <p><strong>Début :</strong> {attendee.evenement.starting ? new Date(attendee.evenement.starting).toLocaleDateString() : 'Date non spécifiée'}</p>
+              <p><strong>Fin :</strong> {attendee.evenement.ending ? new Date(attendee.evenement.ending).toLocaleDateString() : 'Date non spécifiée'}</p>
+              <p><strong>Lieu :</strong> {attendee.evenement.location && attendee.evenement.location.length > 0 ? attendee.evenement.location[0].position : 'Lieu non spécifié'}</p>
+              <button onClick={() => handleCancelReservation(attendee.evenement.id)}>Annuler votre inscription</button>
             </div>
           ))}
         </div>
       ) : (
         <p className="no-reservation">Aucune réservation trouvée.</p>
       )}
+      
       
       {/* Bouton pour voir d'autres événements */}
       <button onClick={handleSeeMoreEvents} className="see-more-events-btn">
