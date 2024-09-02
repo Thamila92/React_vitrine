@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import emailjs from '@emailjs/browser';
 import './event.css';
+
+interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  age: string; // String because it's from an input
+}
 
 interface Location {
   id: number;
@@ -23,8 +31,8 @@ const Events = () => {
   const [events, setEvents] = useState<Evenement[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
-  const [formData, setFormData] = useState({
+  const [selectedEvent, setSelectedEvent] = useState<Evenement | null>(null);
+  const [formData, setFormData] = useState<FormData>({
     firstName: '',
     lastName: '',
     email: '',
@@ -52,12 +60,12 @@ const Events = () => {
     fetchEvents();
   }, []);
 
-  const handleInscriptionClick = (eventId: number, membersOnly: boolean) => {
-    if (membersOnly && !isUserLoggedIn) {
+  const handleInscriptionClick = (event: Evenement) => {
+    if (event.membersOnly && !isUserLoggedIn) {
       alert('Vous ne pouvez pas vous inscrire à cet événement car il est réservé aux membres.');
       return;
     }
-    setSelectedEventId(eventId);
+    setSelectedEvent(event);
     setShowModal(true);
   };
 
@@ -68,33 +76,54 @@ const Events = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (selectedEventId !== null) {
-        try {
-            const response = await axios.post(`${VITE_URL_API}/evenements/${selectedEventId}/inscrire`, {
-                firstName: formData.firstName,
-                lastName: formData.lastName,
-                email: formData.email,
-                age: parseInt(formData.age, 10)  // Convertir l'âge en nombre
-            });
-            alert('Inscription réussie ! Vous êtes maintenant inscrit à l\'événement.');
-            setShowModal(false); // Ferme la modale après l'inscription
-        } catch (error: unknown) {  // Typage explicite comme unknown
-            console.error('Erreur lors de l\'inscription', error);
+    if (selectedEvent !== null) {
+      try {
+        const response = await axios.post(`${VITE_URL_API}/evenements/${selectedEvent.id}/inscrire`, {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          age: parseInt(formData.age, 10)
+        });
 
-            // Vérifiez si l'erreur vient de l'API et affichez un message approprié
-            if (axios.isAxiosError(error) && error.response) {  // Vérification si c'est une erreur Axios
-                if (error.response.data.error === 'You are already registered for this event.') {
-                    alert('Vous êtes déjà inscrit à cet événement.');
-                } else {
-                    alert('Erreur lors de l\'inscription: ' + error.response.data.error);
-                }
-            } else {
-                alert('Erreur lors de l\'inscription. Veuillez réessayer plus tard.');
-            }
+        alert('Inscription réussie ! Vous êtes maintenant inscrit à l\'événement.');
+        setShowModal(false);
+
+        // Envoi de l'email de confirmation
+        sendConfirmationEmail(formData, selectedEvent);
+
+      } catch (error: unknown) {
+        console.error('Erreur lors de l\'inscription', error);
+
+        if (axios.isAxiosError(error) && error.response) {
+          if (error.response.data.error === 'You are already registered for this event.') {
+            alert('Vous êtes déjà inscrit à cet événement.');
+          } else {
+            alert('Erreur lors de l\'inscription: ' + error.response.data.error);
+          }
+        } else {
+          alert('Erreur lors de l\'inscription. Veuillez réessayer plus tard.');
         }
+      }
     }
-};
+  };
 
+  const sendConfirmationEmail = (formData: FormData, event: Evenement) => {
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const userId = import.meta.env.VITE_EMAILJS_USER_ID;
+
+    emailjs.send(serviceId, templateId, {
+      user_name: `${formData.firstName} ${formData.lastName}`,
+      event_name: event.type,
+      event_date: new Date(event.starting).toLocaleDateString(),
+      user_email: formData.email,
+    }, userId)
+    .then((result) => {
+      console.log('Email envoyé avec succès:', result.text);
+    }, (error) => {
+      console.error('Erreur lors de l\'envoi de l\'email:', error.text);
+    });
+  };
 
   if (loading) {
     return <p>Chargement des événements...</p>;
@@ -113,7 +142,7 @@ const Events = () => {
             <p><strong>Lieu :</strong> {event.location[0]?.position}</p>
             <p><strong>Nombre de participants :</strong> {event.currentParticipants}/{event.maxParticipants}</p>
             <p><strong>Accessible aux membres uniquement :</strong> {event.membersOnly ? 'Oui' : 'Non'}</p>
-            <button onClick={() => handleInscriptionClick(event.id, event.membersOnly)}>
+            <button onClick={() => handleInscriptionClick(event)}>
               Inscrivez-vous
             </button>
           </div>

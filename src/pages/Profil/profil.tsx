@@ -85,7 +85,7 @@ const Profile = () => {
     };
     
     const handlePasswordChange = async () => {
-        const userId = localStorage.getItem('userId');
+        const userId = userData.id; 
         const VITE_URL_API = import.meta.env.VITE_URL_API;
 
         try {
@@ -122,10 +122,7 @@ const Profile = () => {
             new_password: ''
         });
     };
-    const handleRenewMembership = () => {
-        // Afficher le formulaire de paiement
-        setIsRenewingSubscription(true);
-    };
+ 
  
 
     return (
@@ -138,9 +135,7 @@ const Profile = () => {
                 />
                 <h2>{userData.name}</h2>
                 <p>{userData.email}</p>
-               <button className="profile-action-btn" onClick={handleRenewMembership}>
-                    Renouveler mon adhésion
-                </button>
+              
             </div>
             <div className="profile-content">
                 <h1>Paramètre de profil</h1>

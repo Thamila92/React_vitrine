@@ -13,6 +13,7 @@ import Don from './pages/Don/don';
 import ChatbotComponent from './components/chatbot/ChatbotComponent';
 
  import DonutChart from './pages/Mes_Dons/mes_dons';
+import RenewCotisation from './pages/RenewCotisation/RenewCotisation.tsx';
 function App() {
   return (
     <div className="App">
@@ -32,6 +33,7 @@ function App() {
           <Route path="/mes-reservations" element={<MesReservations />} />  
           <Route path="/don" element={<Don />} />  
           <Route path="/mes-dons" element={<DonutChart />} />  
+          <Route path="/renew-subscription" element={<RenewCotisation />} />  
 
           
 

@@ -1,4 +1,3 @@
-// Importez les modules nécessaires
 import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import './contact.css';
@@ -12,8 +11,12 @@ const Contact: React.FC = () => {
     e.preventDefault();
 
     if (form.current) {
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const userId = import.meta.env.VITE_EMAILJS_USER_ID;
+
       emailjs
-        .sendForm('service_bcluk8l', 'template_gdeh29o', form.current, 'nLS0DkMFsISuw-ZCa')
+        .sendForm(serviceId, templateId, form.current, userId)
         .then(
           (result) => {
             console.log(result.text);
