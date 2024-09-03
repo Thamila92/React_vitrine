@@ -98,7 +98,7 @@ const Login = () => {
       </form>
 
       <div className="extra-links">
-        <Link to="/forgot-password">Mot de passe oublié ?</Link>
+        <Link to="/ForgotPassword">Mot de passe oublié ?</Link>
         <Link to="/signup">Vous n'avez pas encore de compte ? Créez-en un</Link>
       </div>
     </div>

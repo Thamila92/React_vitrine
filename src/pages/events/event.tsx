@@ -109,7 +109,7 @@ const Events = () => {
 
   const sendConfirmationEmail = (formData: FormData, event: Evenement) => {
     const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_OTHER;
     const userId = import.meta.env.VITE_EMAILJS_USER_ID;
     const messageContent = `
     Hello ${formData.firstName} ${formData.lastName},
@@ -118,7 +118,7 @@ const Events = () => {
 
     Best wishes,
   `;
-    emailjs.send(serviceId, "template_7ijtwe4", {
+    emailjs.send(serviceId, templateId, {
  
         to_name: `${formData.firstName} ${formData.lastName}`, // Nom complet de l'utilisateur
         from_subject: `Confirmation d'inscription à ${event.type}`, // Sujet de l'email
@@ -206,3 +206,4 @@ const Events = () => {
 };
 
 export default Events;
+

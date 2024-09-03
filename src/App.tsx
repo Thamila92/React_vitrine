@@ -14,6 +14,7 @@ import ChatbotComponent from './components/chatbot/ChatbotComponent';
 
  import DonutChart from './pages/Mes_Dons/mes_dons';
 import RenewCotisation from './pages/RenewCotisation/RenewCotisation.tsx';
+import ForgotPassword from './pages/MotdePasseOublier/motdepasseoublier.tsx';
 function App() {
   return (
     <div className="App">
@@ -34,6 +35,7 @@ function App() {
           <Route path="/don" element={<Don />} />  
           <Route path="/mes-dons" element={<DonutChart />} />  
           <Route path="/renew-subscription" element={<RenewCotisation />} />  
+          <Route path="/ForgotPassword" element={<ForgotPassword />} />  
 
           
 
