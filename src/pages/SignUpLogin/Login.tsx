@@ -55,7 +55,7 @@ const Login = () => {
         console.log("Date actuelle:", currentDate);
         console.log("La cotisation est-elle expirée?", isExpired);
 
-        if (isExpired) {
+        if (isExpired || !expirationDate || !cotisations ) {
           console.log("Redirection vers la page de renouvellement de la cotisation...");
           navigate('/renew-subscription');
         } else {
