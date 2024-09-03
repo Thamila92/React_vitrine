@@ -111,12 +111,21 @@ const Events = () => {
     const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
     const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
     const userId = import.meta.env.VITE_EMAILJS_USER_ID;
+    const messageContent = `
+    Hello ${formData.firstName} ${formData.lastName},
 
+    Vous êtes inscrit à l'événement "${event.type}" qui aura lieu le ${new Date(event.starting).toLocaleDateString()}.
+
+    Best wishes,
+  `;
     emailjs.send(serviceId, templateId, {
-      user_name: `${formData.firstName} ${formData.lastName}`,
-      event_name: event.type,
-      event_date: new Date(event.starting).toLocaleDateString(),
-      user_email: formData.email,
+ 
+        to_name: `${formData.firstName} ${formData.lastName}`, // Nom complet de l'utilisateur
+        from_subject: `Confirmation d'inscription à ${event.type}`, // Sujet de l'email
+        message: messageContent, // Contenu du message
+        user_email: formData.email, // Email du destinataire
+      
+      
     }, userId)
     .then((result) => {
       console.log('Email envoyé avec succès:', result.text);
