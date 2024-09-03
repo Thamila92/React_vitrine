@@ -118,7 +118,7 @@ const Events = () => {
 
     Best wishes,
   `;
-    emailjs.send(serviceId, templateId, {
+    emailjs.send(serviceId, "template_7ijtwe4", {
  
         to_name: `${formData.firstName} ${formData.lastName}`, // Nom complet de l'utilisateur
         from_subject: `Confirmation d'inscription à ${event.type}`, // Sujet de l'email
