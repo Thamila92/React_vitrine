@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './demande.css'; 
+import './demande.css';
+import emailjs from 'emailjs-com';
 
 interface FormData {
   email: string;
@@ -36,6 +37,47 @@ const Demande: React.FC = () => {
     setFormData({ ...formData, [id]: value });
   };
 
+  const sendConfirmationEmail = (formData: FormData) => {
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_OTHER;
+    const userId = import.meta.env.VITE_EMAILJS_USER_ID;
+    const messageContent = `
+      Bonjour ${formData.nom} ${formData.prenom},
+
+      Nous accusons réception de votre demande concernant le projet "${formData.titre}".
+
+      Nous traiterons votre demande dans les plus brefs délais et reviendrons vers vous si nous avons besoin de plus d'informations.
+
+      Détails de votre demande :
+      - Description : ${formData.description}
+      - Budget estimé : ${formData.budget}€
+      - Deadline : ${formData.deadline}
+
+      Merci de votre confiance.
+
+      Cordialement,
+      L'équipe de gestion des demandes
+    `;
+
+    emailjs.send(
+      serviceId,
+      templateId,
+      {
+        to_name: `${formData.nom} ${formData.prenom}`, // Nom complet de l'utilisateur
+        from_subject: `Accusé de réception de votre demande`, // Sujet de l'email
+        message: messageContent, // Contenu du message
+        user_email: formData.email // Email du destinataire
+      },
+      userId
+    )
+    .then((result) => {
+      console.log('Email envoyé avec succès:', result.text);
+    })
+    .catch((error) => {
+      console.error("Erreur lors de l'envoi de l'email :", error.text);
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -46,12 +88,13 @@ const Demande: React.FC = () => {
       try {
         await axios.post(`${VITE_URL_API}/demandes`, formData);
         alert('Demande envoyée avec succès !');
+        sendConfirmationEmail(formData); // Appel pour envoyer l'email de confirmation
       } catch (error) {
-        console.error('Erreur lors de l\'envoi de la demande', error);
-        alert('Erreur lors de l\'envoi de la demande.');
+        console.error("Erreur lors de l'envoi de la demande", error);
+        alert("Erreur lors de l'envoi de la demande.");
       }
     } else {
-      alert('La deadline doit être supérieure à la date d\'aujourd\'hui.');
+      alert("La deadline doit être supérieure à la date d'aujourd'hui.");
     }
   };
 
