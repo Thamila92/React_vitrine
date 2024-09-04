@@ -3,6 +3,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import axios from 'axios';
 import './SignUp.css';
+import { useNavigate } from 'react-router-dom';
 
 // Load your Stripe public key
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
@@ -17,6 +18,7 @@ const SignupForm = () => {
         dateDeNaissance: '',
     });
 
+    const navigate = useNavigate();
     const [adherentType, setAdherentType] = useState('');
     const [amount, setAmount] = useState(0);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -94,7 +96,12 @@ const SignupForm = () => {
 
                 if (userRes.status === 201) {
                     alert("Account created successfully!");
+                     navigate('/signUp&Login');
+
                 }
+
+///signUp&Login
+
             }
         } catch (error) {
             console.error("Payment or registration error:", error);
